@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    // to unsubscribe from database
+    // declaring variable for flexibility like on/off on callback
     let userRef;
 
     // auth object in firebase.js
@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
           // inform of javaScript object
           const { name, createdAt } = snap.val();
 
+          // passing above data from db below
           // user state will have all these data
           const data = {
             name,
@@ -45,6 +46,8 @@ export const AuthProvider = ({ children }) => {
           setIsLoading(false);
         });
       } else {
+        // whenever we don't have any user data if user is not signed in,
+        // don't access database
         if (userRef) {
           userRef.off();
         }
@@ -52,17 +55,20 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
       }
     });
-    // clean up - unsubscribe user
+    // clean up - when component gets unmount
     return () => {
+      // unsubscribe user after auth
       authUser();
+
+      // unsubscribe from db
       if (userRef) {
         userRef.off();
       }
     };
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, isLoading }}>
+  return ( // passing object
+    <AuthContext.Provider value={ { user, isLoading } }>
       {children}
     </AuthContext.Provider>
   );

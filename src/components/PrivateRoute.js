@@ -8,9 +8,10 @@ import { Container, Loader } from 'rsuite';
 // available to your rendered Component
 const PrivateRoute = ({ children, ...routeProps }) => {
 
-  // context object
+  // state object
   const { user, isLoading } = useAuth();
   
+  // if data is loading & still don't have user
   if (isLoading && !user) {
     return <Container>
       <Loader center vertical size="md" content="Loading" speed="slow" />

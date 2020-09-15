@@ -6,6 +6,7 @@ const PublicRoute = ({ children, ...routeProps }) => {
   
   const { user, isLoading } = useAuth();
 
+  // if data is loading & still don't have user
   if (isLoading && !user) {
     return <Container>
       <Loader center vertical size="md" content="Loading" speed="slow" />
