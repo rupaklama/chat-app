@@ -9,6 +9,7 @@ import PublicRoute from './components/PublicRoute';
 import SignIn from './pages/SignIn';
 import { AuthProvider } from './context/auth.context';
 
+// creating custom route components like Route
 function App() {
   return (
     <div>

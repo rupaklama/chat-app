@@ -14,18 +14,23 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   // our state object
   const [user, setUser] = useState(null);
+  // A Boolean value indicating whether the view is currently loading content
+  // Set to true if the receiver is still loading content; otherwise, false
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    // declaring variable for flexibility like on/off on callback
+    // declaring variable for flexibility to use on/off on callback methods
+    // to subscribe/unsubscribe from db - loading & cleaning up
     let userRef;
 
     // auth object in firebase.js
-    // onAuthStateChanged allow us to access into signed in users inside firebase
+    // onAuthStateChanged allow us to access into signed in user object inside firebase
     const authUser = auth.onAuthStateChanged(signedInUser => {
+      // console.log(signedInUser)
       if (signedInUser) {
-        // getting user data from database
+        // getting user data from database to share User data with other components
         // whenever our data changes on this path inside database
-        // on callback will be fired every time
+        // userRef - on callback will be fired every time & receive a snap shot - info
         // on method is to access data - dataSnapShot
         userRef = database.ref(`/profiles/${signedInUser.uid}`);
         userRef.on('value', snap => {
@@ -34,7 +39,7 @@ export const AuthProvider = ({ children }) => {
           const { name, createdAt } = snap.val();
 
           // passing above data from db below
-          // user state will have all these data
+          // our user state object will have all these data
           const data = {
             name,
             createdAt,
@@ -43,39 +48,47 @@ export const AuthProvider = ({ children }) => {
           };
 
           setUser(data);
+
+          // after successful data loading
           setIsLoading(false);
         });
       } else {
-        // whenever we don't have any user data if user is not signed in,
-        // don't access database
+        // this is when user is signed off
+
+        // if user is not signed in, don't access database
         if (userRef) {
           userRef.off();
         }
         setUser(null);
+
+        // no user, so it to false
         setIsLoading(false);
       }
     });
-    // clean up - when component gets unmount
+
+    // clean up is when component gets unmounted
+    // when we don't need data anymore
     return () => {
-      // unsubscribe user after auth
+      // unsubscribe user after authentication
       authUser();
 
-      // unsubscribe from db
+      // unsubscribe from database
       if (userRef) {
         userRef.off();
       }
     };
   }, []);
 
-  return ( // passing object
+  return ( // passing our global state objects
     <AuthContext.Provider value={ { user, isLoading } }>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// we have to import AuthContext on every files that want to use it,
+// To consume Context object, we need to use useContext hook
+// we have to import AuthContext object on every files to consume it,
 // it gets tedious doing so, creating custom wrapper hook to make it more accessible
 export const useAuth = () => useContext(AuthContext);
-// useAuth is a function that returns whatever useContext going to return
+// useAuth is a function that returns whatever useContext going to return - our global state object
 // function returning function

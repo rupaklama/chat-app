@@ -4,14 +4,15 @@ import { useAuth } from '../context/auth.context';
 import { Container, Loader } from 'rsuite';
 
 // route that requires authentication to access
-// Using spread routeProps to make default props of route - match, history & location
+// Using spread props to make default props of route available - match, history & location
 // available to your rendered Component
 const PrivateRoute = ({ children, ...routeProps }) => {
 
   // state object
   const { user, isLoading } = useAuth();
   
-  // if data is loading & still don't have user
+  // if data is loading & still don't have user 
+  // this is on sign in page
   if (isLoading && !user) {
     return <Container>
       <Loader center vertical size="md" content="Loading" speed="slow" />
@@ -23,6 +24,7 @@ const PrivateRoute = ({ children, ...routeProps }) => {
     return <Redirect to="/signin" />;
   }
 
+  
   return <Route {...routeProps}>{children}</Route>;
 };
 
