@@ -36,13 +36,14 @@ export const AuthProvider = ({ children }) => {
         userRef.on('value', snap => {
           // Inside dataSnapShot, we have snap.val method to get data from database
           // inform of javaScript object
-          const { name, createdAt } = snap.val();
+          const { name, createdAt, avatar } = snap.val();
 
           // passing above data from db below
           // our user state object will have all these data
           const data = {
             name,
             createdAt,
+            avatar,
             uid: signedInUser.uid,
             email: signedInUser.email,
           };

@@ -3,9 +3,12 @@ import { Drawer, Button, Divider, Alert } from 'rsuite';
 import { useAuth } from '../../context/auth.context';
 import EditableInput from '../EditableInput';
 import { database } from '../../api/firebase';
+import AvatarUploadBtn from './AvatarUploadBtn';
+import ProviderBlock from './ProviderBlock';
 
 const Dashboard = ({ onSignOut }) => {
 
+  // auth context object
   const { user } = useAuth();
 
   // newData param gets arg value from dashboard component
@@ -35,6 +38,8 @@ const Dashboard = ({ onSignOut }) => {
         <Drawer.Body>
           <h3>Hey, {user.name}!</h3>
 
+          <ProviderBlock />
+          
           <Divider />
 
           <EditableInput
@@ -43,6 +48,9 @@ const Dashboard = ({ onSignOut }) => {
             onSave={onSave}
             label={<h6 className="mb-2">Nickname</h6>} 
           />
+
+          <AvatarUploadBtn />
+
         </Drawer.Body>
 
         <Drawer.Footer>

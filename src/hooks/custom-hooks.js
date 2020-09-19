@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
-// custom hook for Drawer
+// custom hook to apply on Modal in react suite
+// returning boolean values
 export function useModalState(defaultValue = false) {
 
   const [isOpen, setIsOpen] = useState(defaultValue);
