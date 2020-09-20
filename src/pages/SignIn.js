@@ -14,7 +14,10 @@ const SignIn = () => {
       if (additionalUserInfo.isNewUser) {
         // if user is new, store it inside database
         // .ref - need to specify reference, a path to database under which we will store data
-        // set method is to set js objects to json string which return promises
+        // set method is to Write or replace data to a defined path, like messages/users/<username>
+        // set method creates a new object in db
+        // set method also sets js objects to json string which return promises
+        // here, set method is creating profiles object in db
         await database.ref(`/profiles/${user.uid}`).set({
           name: user.displayName,
           createdAt: firebase.database.ServerValue.TIMESTAMP,
