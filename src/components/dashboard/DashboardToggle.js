@@ -11,7 +11,7 @@ const DashboardToggle = () => {
   // media break points
   // this hook returns a boolean to check whether true or false
   // using this hook, we can check if we are currently on device with 992 px
-  const isMobile = useMediaQuery('max-width: 992px');
+  const isMobile = useMediaQuery('max-width: 992px'); // max - less than & equal to 992px
 
   const onSignOut = useCallback(() => {
     // to sign out user from firebase

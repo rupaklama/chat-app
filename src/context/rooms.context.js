@@ -10,7 +10,6 @@ export const RoomsProvider = ({ children }) => {
   // global state object
   const [chatData, setChatData] = useState(null);
  
-
   // we will get our data inside useEffect when component mounts
   useEffect(() => {
     const chatRooms = database.ref('rooms');
@@ -39,5 +38,6 @@ export const RoomsProvider = ({ children }) => {
   )
 }
 
-// to avoid calling useContext with RoomsContext on every time 
+// helper hook
+// to avoid calling useContext with RoomsContext object on every time 
 export const useRooms = () => useContext(RoomsContext);

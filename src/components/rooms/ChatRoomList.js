@@ -9,7 +9,7 @@ const ChatRoomList = ({ aboveElHeight }) => {
   const rooms = useRooms();
 
   // The useLocation hook returns the location object that represents the current URL. 
-  // You can think about it like a useState that returns a new location whenever the URL changes.
+  // pathname method of location object determines on which page we are - home or about 
   const location = useLocation();
 
   return (
