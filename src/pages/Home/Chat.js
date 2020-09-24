@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useRooms } from '../../context/rooms.context';
 import { Loader } from 'rsuite';
+import { CurrentRoomProvider } from '../../context/current-room.context';
 
 import ChatTop from '../../components/chat-window/top';
 import Messages from '../../components/chat-window/messages';
 import ChatBottom from '../../components/chat-window/bottom';
-
-
 
 
 const Chat = () => {
@@ -31,8 +30,25 @@ const Chat = () => {
     return <h6 className="text-center mt-page">Chat not found...</h6>
   }
 
+  // getting data from rooms context - useRooms()
+  const {name, description} = currentRoom;
+
+  // NOTE:
+  // Inside this component, useRooms() context is being consumed, so
+  // any update on that Context Object will cause re-render to this component
+  // even though the update is not related to this component
+  // Therefore, inside this component will provide new context - CurrentRoomProvider
+  // with data we need using useContextSelector
+
+  // passing above data to our object that will be pass to our context
+  const currentRoomData = {
+    name, description
+  }
+
   return (
-    <Fragment>
+    // using useContextSelector with provider to pass above data to 
+    // nested components below
+    <CurrentRoomProvider data={currentRoomData}>
 
       <div className="chat-top">
         <ChatTop />
@@ -46,7 +62,7 @@ const Chat = () => {
         <ChatBottom />
       </div>
 
-    </Fragment>
+    </CurrentRoomProvider>
   );
 };
 
