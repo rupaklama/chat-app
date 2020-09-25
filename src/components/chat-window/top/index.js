@@ -7,15 +7,15 @@ import RoomInfoBtnModal from './RoomInfoBtnModal';
 
 const Top = () => {
   // custom helper hook from current-room-context which has an arg - selector
-  // for selector, we are going to pass state & pick name key
-  // v for value
+  // for selector, we are going to pass state & pick object's name key
+  // v for value which is a reference to object, can't access object directly
 
   // now, we only consume 'name' from context object,
   // this component will not get re-render when other context object's values get changed
   const name = useCurrentRoom(v => v.name); // arg - selector
   // console.log(name)
 
-
+  // custom media query hook
   const isMobile = useMediaQuery('(max-width: 992px)');
 
   return (
@@ -36,7 +36,7 @@ const Top = () => {
           <span className="text-disappear">{name}</span>
         </h4>
 
-        <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar>
+        <ButtonToolbar className="white-space:no-wrap">todo</ButtonToolbar>
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
